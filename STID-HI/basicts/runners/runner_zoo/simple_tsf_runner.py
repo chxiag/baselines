@@ -11,6 +11,7 @@ class SimpleTimeSeriesForecastingRunner(BaseTimeSeriesForecastingRunner):
         self.forward_features = cfg["MODEL"].get("FORWARD_FEATURES", None)
         self.target_features = cfg["MODEL"].get("TARGET_FEATURES", None)
 
+        self.output_length = 336
     def select_input_features(self, data: torch.Tensor) -> torch.Tensor:
         """Select input features.
 
@@ -55,6 +56,7 @@ class SimpleTimeSeriesForecastingRunner(BaseTimeSeriesForecastingRunner):
 
         # preprocess
         future_data, history_data = data
+        future_data = history_data[:,-self.output_length:,:,:]
         history_data = self.to_running_device(history_data)      # B, L, N, C
         future_data = self.to_running_device(future_data)       # B, L, N, C
         batch_size, length, num_nodes, _ = future_data.shape
@@ -76,3 +78,4 @@ class SimpleTimeSeriesForecastingRunner(BaseTimeSeriesForecastingRunner):
         prediction = self.select_target_features(prediction_data)
         real_value = self.select_target_features(future_data)
         return prediction, real_value
+
