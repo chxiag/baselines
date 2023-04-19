@@ -8,7 +8,7 @@ from easytorch import launch_runner, Runner
 
 def parse_args():
     parser = ArgumentParser(description='Welcome to EasyTorch!')
-    parser.add_argument('-c', '--cfg', default="examples/STID/STID_METR-LA.py", help='training config')
+    parser.add_argument('-c', '--cfg', default="examples/STID/STID_ETTh1.py", help='training config')
     parser.add_argument('--ckpt', default="checkpoints/STID_200/c3aeadfd9ebb252bc7170a47950b81b8/STID_005.pt", help='ckpt path. if it is None, load default ckpt in ckpt save dir', type=str)
     parser.add_argument("--gpus", default="0", help="visible gpus")
     return parser.parse_args()
